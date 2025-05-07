@@ -2,8 +2,8 @@ import React from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useCYZYGYSMSTheme } from '../providers/ThemeProvider';
 import { useShallow } from 'zustand/shallow';
-import { useSettingsStore } from '../../data/stores/SettingsStore';
-
+import { useSettingsStore } from '../hooks/useSettingsStore';
+ 
 type DividerProps = {
   vertical?: boolean;
   style?: StyleProp<ViewStyle>;

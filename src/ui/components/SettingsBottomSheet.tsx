@@ -4,9 +4,9 @@ import ActionSheet, { SheetProps } from "react-native-actions-sheet";
 import { Bleed, Stack } from "@grapp/stacks";
 import { AdvancedCheckbox } from "react-native-advanced-checkbox";
 import { useShallow } from "zustand/shallow";
-import { useSettingsStore } from "../../data/stores/SettingsStore";
 import constants from "../../data/constants";
 import { Divider } from "./Divider";
+import { useSettingsStore } from "../hooks/useSettingsStore";
 
 const SettingsBottomSheet = (props: SheetProps<"settings-bottom-sheet">) => {
     const settingsStore = useSettingsStore(useShallow(store =>({
@@ -20,7 +20,7 @@ const SettingsBottomSheet = (props: SheetProps<"settings-bottom-sheet">) => {
 //   }
 
   let theme = settingsStore.currentTheme()
- 
+  
   let setting = (()=>{
     return settingsStore.settings.find((setting) => setting.kind === props.payload?.settingKind);
     
