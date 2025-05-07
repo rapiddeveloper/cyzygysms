@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useCYZYGYSMSTheme } from '../providers/ThemeProvider';
+import { useShallow } from 'zustand/shallow';
+import { useSettingsStore } from '../../data/stores/SettingsStore';
 
 type DividerProps = {
   vertical?: boolean;
@@ -8,7 +10,17 @@ type DividerProps = {
 };
 
 export const Divider: React.FC<DividerProps> = ({ vertical = false, style }) => {
-  const { theme } = useCYZYGYSMSTheme();
+ 
+      const settingsStore = useSettingsStore(useShallow(store =>({
+     
+      currentTheme: store.currentTheme
+     })))
+  
+  //   if (props.payload === undefined) {
+  //     return null;
+  //   }
+  
+    let theme = settingsStore.currentTheme()
 
   return (
     <View
@@ -24,7 +36,7 @@ export const Divider: React.FC<DividerProps> = ({ vertical = false, style }) => 
 
 const styles = StyleSheet.create({
   divider: {
-    opacity: 0.12,
+    opacity: 0.24,
   },
   horizontal: {
     height: 1,

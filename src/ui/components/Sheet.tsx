@@ -1,0 +1,15 @@
+import {registerSheet, SheetDefinition} from 'react-native-actions-sheet';
+import SettingsBottomSheet from './SettingsBottomSheet';
+import {   AppSettingKind } from '../../data/domain/models/AppSettings';
+ 
+registerSheet('settings-bottom-sheet', SettingsBottomSheet);
+ 
+// We extend some of the types here to give us great intellisense
+// across the app for all registered sheets.
+declare module 'react-native-actions-sheet' {
+  interface Sheets {
+     'settings-bottom-sheet': SheetDefinition<{payload: {settingKind: AppSettingKind}}>;
+  }
+}
+ 
+export {};

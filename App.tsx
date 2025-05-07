@@ -7,6 +7,8 @@ import { useFonts } from 'expo-font';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainTabView from './src/ui/navigation/MainTabView';
 import { CYZYGYSMSThemeProvider } from './src/ui/providers/ThemeProvider';
+import {  SheetProvider } from 'react-native-actions-sheet';
+import './src/ui/components/Sheet'
 
 const RootStack = createNativeStackNavigator();
 
@@ -28,7 +30,9 @@ const [fontsLoaded] = useFonts({
   }
 
   return (
+
     <CYZYGYSMSThemeProvider>
+    <SheetProvider>
     <NavigationContainer>
       <SafeAreaProvider>
         <RootStack.Navigator screenOptions={{ headerShown: false, headerStyle: { backgroundColor: '#fff' } }}>
@@ -37,7 +41,9 @@ const [fontsLoaded] = useFonts({
         <StatusBar style="auto" />
       </SafeAreaProvider>
     </NavigationContainer>
+    </SheetProvider>
     </CYZYGYSMSThemeProvider>
+
   );
 }
 
