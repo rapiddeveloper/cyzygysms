@@ -38,6 +38,7 @@ export default function MainTabView() {
    
   return (
     <TabView.Navigator
+    initialRouteName='Settings'
     screenOptions={{
         headerStyle: {
           backgroundColor: theme.colors.primary800,  
