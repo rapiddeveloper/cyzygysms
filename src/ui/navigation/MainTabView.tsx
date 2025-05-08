@@ -38,7 +38,7 @@ export default function MainTabView() {
    
   return (
     <TabView.Navigator
-    initialRouteName='Settings'
+    initialRouteName='AddStudent'
     screenOptions={{
         headerStyle: {
           backgroundColor: theme.colors.primary800,  
