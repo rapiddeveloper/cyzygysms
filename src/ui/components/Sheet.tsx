@@ -11,7 +11,9 @@ registerSheet('settings-bottom-sheet', SettingsBottomSheet);
 declare module 'react-native-actions-sheet' {
   interface Sheets {
      'settings-bottom-sheet': SheetDefinition<{payload: {settingKind: AppSettingKind}}>;
-     'student-profile-sheet': SheetDefinition<{payload: {profile: Student}}>;
+    // 'student-profile-sheet': SheetDefinition<{payload: {profile: Student}}>;
+     'student-profile-sheet': SheetDefinition 
+
   }
 }
 

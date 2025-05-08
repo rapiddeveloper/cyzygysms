@@ -32,17 +32,17 @@ const [fontsLoaded] = useFonts({
   return (
 
     <CYZYGYSMSThemeProvider>
-    <SheetProvider>
     <NavigationContainer>
       <SafeAreaProvider>
-        <RootStack.Navigator screenOptions={{ headerShown: false, headerStyle: { backgroundColor: '#fff' } }}>
-          <RootStack.Screen name="MainTabs" component={MainTabView} />
-         </RootStack.Navigator>
-        <StatusBar style="auto" />
+        <SheetProvider>
+          <RootStack.Navigator screenOptions={{ headerShown: false, headerStyle: { backgroundColor: '#fff' } }}>
+            <RootStack.Screen name="MainTabs" component={MainTabView} />
+          </RootStack.Navigator>
+          <StatusBar style="auto" />
+        </SheetProvider>
       </SafeAreaProvider>
     </NavigationContainer>
-    </SheetProvider>
-    </CYZYGYSMSThemeProvider>
+     </CYZYGYSMSThemeProvider>
 
   );
 }

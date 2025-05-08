@@ -1,6 +1,6 @@
 import { Pressable, StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native'
-import React from 'react'
-import ActionSheet from 'react-native-actions-sheet'
+import React, { useCallback } from 'react'
+import ActionSheet, { SheetProps } from 'react-native-actions-sheet'
 import { Stack } from '@grapp/stacks'
 import ActionSheetHeader from './ActionSheetHeader'
 import { IconButton } from './IconButton'
@@ -11,21 +11,28 @@ import ActionSheetContentContainer from './ActionSheetContentContainer'
 type StudentProfileActionSheetProps = {
   onDeleteProfile: () => void;
   onEditProfile: () => void;
- }
+ }  
 
 const StudentProfileActionSheet = (props: StudentProfileActionSheetProps) => {
 
      const {theme} = useSettingsTheme()
+ 
     
     const labelStyle: StyleProp<TextStyle> = [theme.typography.subtitle1, {textTransform: 'capitalize', color: theme.colors.onBackground}]
-    console.log('StudentProfileActionSheet', props)
-  return (
+    console.log('StudentProfileActionSheet props', props)
+    
+  
+    return (
     <ActionSheet >
        <ActionSheetContentContainer>
+        
            {/* <ActionSheetHeader title='' /> */}
-            <Pressable onPress={() => props.onDeleteProfile()}>
+            <Pressable onPress={() => {
+                console.log('Delete Profile props', props)
+                props.onDeleteProfile()
+            }}>
                  <Stack horizontal align={'center'} space={4}>
-                    {/* <IconButton name='delete-outline'  /> */}
+                    <IconButton name='delete-outline'  />
                     <Text style={labelStyle}>Delete Profile</Text>
                  </Stack>
             </Pressable>

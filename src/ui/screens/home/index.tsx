@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { use, useEffect } from "react";
+import React, {  useCallback, useEffect } from "react";
 import { HomeView } from "./Home.view";
 import { Student } from "../../../data/domain/models/Student";
 import StudentProfileActionSheet from "../../components/StudentProfileActionSheet";
@@ -16,8 +16,8 @@ const Home = () => {
   };
   const handleDeleteProfile = () => {
     console.log("Delete Profile");
-    setSelectedStudent(null);
-  };
+   }
+
   useEffect(() => {
     if (selectedStudent) {
       SheetManager.show("student-profile-sheet");
@@ -27,11 +27,10 @@ const Home = () => {
   return (
     <View>
       <HomeView onProfileSelect={handleProfileSelect} />
+      
       <StudentProfileActionSheet
          onDeleteProfile={handleDeleteProfile}
-        // onDeleteProfile={() => {
-        //   console.log("Delete Profile");
-        // }}
+        
         onEditProfile={() => {
           console.log("Edit Profile");
         }}
