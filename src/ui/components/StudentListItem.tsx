@@ -17,13 +17,17 @@ import { IconButton } from "./IconButton";
 
 type StudentProps = {
   student: Student;
+  /**
+   * @description This function is called when the user taps more actions icon on the student.
+   * @param {Student} student - The student data to perform the action on.
+   */
+  onPerformAction?: (student: Student) => void;
 };
 
 const StudentListItem = (props: StudentProps) => {
-  const { student } = props;
+  const { student, onPerformAction } = props;
   const { theme } = useCYZYGYSMSTheme();
-  const { colors } = theme;
-  const { typography } = theme;
+   const { typography } = theme;
 
   return (
     
@@ -42,7 +46,7 @@ const StudentListItem = (props: StudentProps) => {
             {student.enrollmentStatus}
           </Text>
         </Stack>
-        <IconButton name="more-vert"  color="black" style={[styles.iconButton]} />
+        <IconButton name="more-vert"  color="black" style={[styles.iconButton]} onPress={() => onPerformAction?.(student)} />
       </Stack>
       
   );

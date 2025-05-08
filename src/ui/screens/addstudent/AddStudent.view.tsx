@@ -15,6 +15,7 @@ import { Picker } from "@react-native-picker/picker";
 
 import { TextField } from "../../components/TextField";
 import { EnrollmentStatus } from "../../../data/domain/models/Student";
+import StudentPhotoPicker from "../../components/StudentPhotoPicker";
 
 type StudentFormData = {
   firstName: string;
@@ -63,6 +64,9 @@ export const AddStudentView: React.FC = () => {
 
   return (
     <Stack space={4}>
+       <Box style={{height: 200}}>
+          <StudentPhotoPicker onImageLoaded={(asset) => console.log(asset)} currUri={null}  />
+       </Box>
       <TextField
         label="First Name"
         name="firstName"
