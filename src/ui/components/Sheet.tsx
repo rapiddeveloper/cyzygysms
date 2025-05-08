@@ -3,6 +3,11 @@ import SettingsBottomSheet from './SettingsBottomSheet';
 import {   AppSettingKind } from '../../data/domain/models/AppSettings';
 import { Student } from '../../data/domain/models/Student';
 import StudentProfileActionSheet from './StudentProfileActionSheet';
+
+type StudentProfileActionSheetProps = {
+  onDeleteProfile: () => void;
+  onEditProfile: () => void;
+ }  
  
 registerSheet('settings-bottom-sheet', SettingsBottomSheet);
  
@@ -12,7 +17,7 @@ declare module 'react-native-actions-sheet' {
   interface Sheets {
      'settings-bottom-sheet': SheetDefinition<{payload: {settingKind: AppSettingKind}}>;
     // 'student-profile-sheet': SheetDefinition<{payload: {profile: Student}}>;
-     'student-profile-sheet': SheetDefinition 
+     'student-profile-sheet': SheetDefinition<{payload: StudentProfileActionSheetProps}>;
 
   }
 }

@@ -8,35 +8,33 @@ import { Student } from '../../data/domain/models/Student'
 import { useSettingsTheme } from '../hooks/useSettingsTheme'
 import ActionSheetContentContainer from './ActionSheetContentContainer'
 
-type StudentProfileActionSheetProps = {
-  onDeleteProfile: () => void;
-  onEditProfile: () => void;
- }  
 
-const StudentProfileActionSheet = (props: StudentProfileActionSheetProps) => {
+
+const StudentProfileActionSheet = (props: SheetProps<'student-profile-sheet'>) => {
 
      const {theme} = useSettingsTheme()
- 
+    const {payload} = props
     
     const labelStyle: StyleProp<TextStyle> = [theme.typography.subtitle1, {textTransform: 'capitalize', color: theme.colors.onBackground}]
-    console.log('StudentProfileActionSheet props', props)
+   // console.log('StudentProfileActionSheet props', props)
     
-  
+    if (payload === undefined) {
+        return null;
+      }
+
     return (
     <ActionSheet >
        <ActionSheetContentContainer>
         
-           {/* <ActionSheetHeader title='' /> */}
-            <Pressable onPress={() => {
-                console.log('Delete Profile props', props)
-                props.onDeleteProfile()
+             <Pressable onPress={() => {
+                 payload.onDeleteProfile()
             }}>
                  <Stack horizontal align={'center'} space={4}>
                     <IconButton name='delete-outline'  />
                     <Text style={labelStyle}>Delete Profile</Text>
                  </Stack>
             </Pressable>
-            <Pressable onPress={() => props.onEditProfile()}>
+            <Pressable onPress={() => payload.onEditProfile()}>
                  <Stack horizontal align={'center'} space={4}>
                     <IconButton name='edit'  />
                     <Text style={labelStyle}>Edit Profile</Text>
