@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useCYZYGYSMSTheme } from '../providers/ThemeProvider';
 import { useShallow } from 'zustand/shallow';
@@ -24,6 +23,7 @@ export const Divider: React.FC<DividerProps> = ({ vertical = false, style }) => 
 
   return (
     <View
+      
       style={[
         styles.divider,
         style,

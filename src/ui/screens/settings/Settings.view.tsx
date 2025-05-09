@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import SettingsItem from "../../components/SettingsItem";
@@ -6,6 +6,7 @@ import { Stack } from "@grapp/stacks";
 import { Divider } from "../../components/Divider";
 import { EnrollmentStatus } from "../../../data/domain/models/StudentProfile";
 import { SettingsViewProps } from "./Settings.types";
+import LayoutContainer from "../../components/LayoutContainer";
 
 /**
  * the view for the settings screen
@@ -14,9 +15,11 @@ import { SettingsViewProps } from "./Settings.types";
  */
 
 const SettingsView = (props: SettingsViewProps) => {
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Stack space={4} divider={<Divider />}>
+        const id = useId()
+  
+   return (
+    <LayoutContainer scrolls>
+      <Stack space={4}  divider={<Divider key={id}  />}>
         {props.settings.map((setting) => (
           <SettingsItem
             key={setting.kind}
@@ -25,7 +28,7 @@ const SettingsView = (props: SettingsViewProps) => {
           />
         ))}
       </Stack>
-    </ScrollView>
+    </LayoutContainer>
   );
 };
 

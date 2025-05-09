@@ -17,7 +17,8 @@ const Settings = () => {
   const handleSelect = (kind: AppSettingKind) => {
      SheetManager.show('settings-bottom-sheet', {payload: {settingKind: kind}})
   };
-
+  console.log("settings", settings[0].kind);
+  
   useEffect(()=>{
        initialize();
   },[])

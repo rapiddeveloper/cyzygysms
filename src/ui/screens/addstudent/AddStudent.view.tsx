@@ -14,6 +14,8 @@ import { EnrollmentPicker } from "../../components/EnrollmentPicker";
 import { useSettingsTheme } from "../../hooks/useSettingsTheme";
 import LayoutContainer from "../../components/LayoutContainer";
 import constants from "../../../data/utilites/constants";
+import { useSettingsStore } from "../../hooks/useSettingsStore";
+import { useShallow } from "zustand/shallow";
  
 
 type AddStudentViewProps = {
@@ -45,8 +47,22 @@ const schema = yup
   .required();
 
 export const AddStudentView = (props: AddStudentViewProps) => {
-  const { theme } = useSettingsTheme();
+  //const { theme } = useSettingsTheme();
+  const settingsStore = useSettingsStore(
+      useShallow((store) => ({
+        updateValue: store.updateValue,
+        settings: store.settings,
+        currentTheme: store.currentTheme,
+      }))
+    );
+  
+    //   if (props.payload === undefined) {
+    //     return null;
+    //   }
+  
+    let theme = settingsStore.currentTheme();
 
+  console.log('theme', theme)
   const {
     register,
     setValue,

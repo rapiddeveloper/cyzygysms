@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { AppSettingKind } from '../../data/domain/models/AppSettings';
 import { CYZYGYSMSTheme } from '../../data/@types/CYZYGYSMSTheme';
 import { useSettingsStore } from './useSettingsStore';
+import { createSettingsStore, SettingsStore } from '../../data/stores/SettingsStore';
+import { useStore } from 'zustand';
 
 interface UseSettingsTheme {
   theme: CYZYGYSMSTheme;
@@ -34,4 +36,5 @@ export const useSettingsTheme = (): UseSettingsTheme => {
     toggleTheme,
     isDarkMode
   };
+     //useStore(createSettingsStore((store)=>), selector)
 };

@@ -9,6 +9,7 @@ import MainTabView from './src/ui/navigation/MainTabView';
 import { CYZYGYSMSThemeProvider } from './src/ui/providers/ThemeProvider';
 import {  SheetProvider } from 'react-native-actions-sheet';
 import './src/ui/components/Sheet'
+import { SettingsStoreProvider } from './src/ui/providers/SettingsStoreProvider';
 
 const RootStack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ const [fontsLoaded] = useFonts({
   return (
 
     <CYZYGYSMSThemeProvider>
+    <SettingsStoreProvider>
     <NavigationContainer>
       <SafeAreaProvider>
         <SheetProvider>
@@ -42,6 +44,7 @@ const [fontsLoaded] = useFonts({
         </SheetProvider>
       </SafeAreaProvider>
     </NavigationContainer>
+    </SettingsStoreProvider>
      </CYZYGYSMSThemeProvider>
 
   );
