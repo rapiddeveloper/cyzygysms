@@ -1,5 +1,5 @@
-import { Student } from "../../../data/domain/models/Student";
+import { StudentProfile } from "../../../data/domain/models/StudentProfile";
 
-export type HomeViewProps = {      
-  onProfileSelect: (student: Student) => void;
-}
+export type HomeViewProps = {
+  onProfileSelect: (student: StudentProfile) => void;
+};

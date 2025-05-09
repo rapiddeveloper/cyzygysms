@@ -7,35 +7,40 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { TextField } from "../../components/TextField";
-import { EnrollmentStatus } from "../../../data/domain/models/Student";
+import { EnrollmentStatus, StudentProfileFormData } from "../../../data/domain/models/StudentProfile";
 import StudentPhotoPicker from "../../components/StudentPhotoPicker";
 import { ImagePickerAsset } from "expo-image-picker";
 import { EnrollmentPicker } from "../../components/EnrollmentPicker";
 import { useSettingsTheme } from "../../hooks/useSettingsTheme";
 import LayoutContainer from "../../components/LayoutContainer";
-
-type StudentFormData = {
-  firstName: string;
-  email: string;
-  enrollmentStatus: string;
-  photoURL: string;
-};
+import constants from "../../../data/utilites/constants";
+ 
 
 type AddStudentViewProps = {
   onPhotoUpload: (photo: string) => Promise<void>;
+  onSubmit: (data: StudentProfileFormData) => void;
 };
 
 const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const schema = yup
   .object({
-    firstName: yup.string().required("First name is required"),
+    name: yup.string().required("First name is required"),
     email: yup
       .string()
       .matches(emailRegex, "Please enter a valid email")
       .required("Email is required"),
     enrollmentStatus: yup.string().required("Enrollment status is required"),
-    photoURL: yup.string().required("Please select a photo"),
+    file: yup.object({
+      uri: yup
+        .string()
+        .required("File URI is required")
+        .test("is-valid-uri", "Invalid file URI", (value) =>
+          value ? value.startsWith("http://") || value.startsWith("https://") || value.startsWith("file://") : false
+        ),
+      name: yup.string().required("File name is required"),
+      type: yup.string().required("File type is required"),
+    }).required(), // Ensure the file object is required
   })
   .required();
 
@@ -49,40 +54,39 @@ export const AddStudentView = (props: AddStudentViewProps) => {
     control,
     reset,
     formState: { errors },
-  } = useForm<StudentFormData>({
+  } = useForm<StudentProfileFormData>({
     defaultValues: {
-      firstName: "",
+      name: "",
       email: "",
       enrollmentStatus: EnrollmentStatus.ENROLLED,
-      photoURL: "",
+      file: undefined,
     },
     resolver: yupResolver(schema),
   });
 
-  console.log("errors", errors);
-
-  const onSubmit = (data: StudentFormData) => {
+ 
+  const onSubmit = (data: StudentProfileFormData) => {
     console.log("onSubmit", data);
-    console.log(data);
+    
+    props.onSubmit(data);
   };
 
   const handleImageLoaded = async (
     asset: ImagePickerAsset,
     onChange: (value: string) => void
   ) => {
-    console.log("handleImageLoaded", asset);
-    // await props.onPhotoUpload(asset.uri);
-    setValue("photoURL", asset.uri);
+    await props.onPhotoUpload(asset.uri);
+    setValue("file", {uri: asset.uri, name: asset.fileName || "", type: asset.mimeType || ""});
     // onChange(asset.uri);
   };
 
   return (
-    <LayoutContainer>
+    <LayoutContainer scrolls={true}>
       <Stack space={4}>
         <Stack space={4} style={{ height: 200, alignItems: "center" }}>
           <Controller
             control={control}
-            name="photoURL"
+            name="file"
             render={({ field: { onChange, value } }) => (
               <StudentPhotoPicker
                 onImageLoaded={(asset) => handleImageLoaded(asset, onChange)}
@@ -90,7 +94,7 @@ export const AddStudentView = (props: AddStudentViewProps) => {
               />
             )}
           />
-          {errors.photoURL && (
+          {errors.file && (
             <Text
               style={[
                 styles.photoError,
@@ -98,16 +102,16 @@ export const AddStudentView = (props: AddStudentViewProps) => {
                 { color: theme.colors.error },
               ]}
             >
-              {errors.photoURL.message}
+              {errors.file.message}
             </Text>
           )}
         </Stack>
         <TextField
           label="First Name"
-          name="firstName"
+          name="name"
           control={control}
           rules={{ required: true }}
-          error={errors.firstName}
+          error={errors.name}
         />
         <TextField
           label="Email"
@@ -127,7 +131,6 @@ export const AddStudentView = (props: AddStudentViewProps) => {
             theme.typography.button,
             {
               backgroundColor: theme.colors.primary700,
-             
             },
           ]}
           onPress={handleSubmit(onSubmit)}
@@ -141,33 +144,32 @@ export const AddStudentView = (props: AddStudentViewProps) => {
 
 const styles = StyleSheet.create({
   photoError: {
-    fontSize: 12,
-    marginTop: 4,
-    marginLeft: 10,
+    fontSize: constants.formPhotoErrorFontSize,
+    marginTop: constants.formPhotoErrorMarginTop,
+    marginLeft: constants.formPhotoErrorMarginLeft,
   },
   label: {
     color: "black",
-    marginLeft: 10,
+    marginLeft: constants.formLabelMarginLeft,
   },
   button: {
-    marginTop: 40,
-    height: 40,
-    borderRadius: 10,
+    marginTop: constants.formButtonMarginTop,
+    height: constants.formButtonHeight,
+    borderRadius: constants.formButtonBorderRadius,
     justifyContent: "center",
     alignItems: "center",
   },
   container: {
     flex: 1,
     justifyContent: "center",
-    // paddingTop: Constants.statusBarHeight,
-    padding: 8,
+    padding: constants.containerPadding,
     backgroundColor: "#0e101c",
   },
   input: {
     backgroundColor: "white",
     borderColor: "none",
-    height: 40,
-    padding: 10,
-    borderRadius: 4,
+    height: constants.inputHeight,
+    padding: constants.inputPadding,
+    borderRadius: constants.inputBorderRadius,
   },
 });

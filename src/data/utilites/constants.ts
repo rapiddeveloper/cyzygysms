@@ -3,7 +3,7 @@ const constants = {
     actionSheetVerticalPadding: 24,
     actionSheetVerticalSpacing: 4,
 
-// Form styles
+    // Form styles
     formPhotoErrorFontSize: 12,
     formPhotoErrorMarginTop: 4,
     formPhotoErrorMarginLeft: 10,

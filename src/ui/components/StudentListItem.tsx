@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { Student } from "../../data/domain/models/Student";
+import { StudentProfile } from "../../data/domain/models/StudentProfile";
 import { Box, Stack } from "@grapp/stacks";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
@@ -16,47 +16,50 @@ import { IconButton } from "./IconButton";
  */
 
 type StudentProps = {
-  student: Student;
+  student: StudentProfile;
   /**
    * @description This function is called when the user taps more actions icon on the student.
-   * @param {Student} student - The student data to perform the action on.
+   * @param {StudentProfile} student - The student data to perform the action on.
    */
-  onPerformAction?: (student: Student) => void;
+  onPerformAction?: (student: StudentProfile) => void;
 };
 
 const StudentListItem = (props: StudentProps) => {
   const { student, onPerformAction } = props;
   const { theme } = useCYZYGYSMSTheme();
-   const { typography } = theme;
+  const { typography } = theme;
 
   return (
-    
-      <Stack horizontal space={4}>
-        <Box>
-          <Image source={{ uri: student.photoURL }} style={styles.avatar} />
-        </Box>
-        <Stack space={1}>
-          <Text numberOfLines={1} style={[typography.subtitle1]}>
-            {student.fullname}
-          </Text>
-          <Text numberOfLines={1} style={[typography.caption]}>
-            {student.email}
-          </Text>
-          <Text style={[typography.subtitle2, styles.enrollmentStatus]}>
-            {student.enrollmentStatus}
-          </Text>
-        </Stack>
-        <IconButton name="more-vert"  color="black" style={[styles.iconButton]} onPress={() => onPerformAction?.(student)} />
+    <Stack horizontal space={4}>
+      <Box>
+        <Image source={{ uri: student.photoURL }} style={styles.avatar} />
+      </Box>
+      <Stack space={1}>
+        <Text numberOfLines={1} style={[typography.subtitle1]}>
+          {student.fullname}
+        </Text>
+        <Text numberOfLines={1} style={[typography.caption]}>
+          {student.email}
+        </Text>
+        <Text style={[typography.subtitle2, styles.enrollmentStatus]}>
+          {student.enrollmentStatus}
+        </Text>
       </Stack>
-      
+      <IconButton
+        name="more-vert"
+        color="black"
+        style={[styles.iconButton]}
+        onPress={() => onPerformAction?.(student)}
+      />
+    </Stack>
   );
 };
 
 export default StudentListItem;
 
 const styles = StyleSheet.create({
-  iconButton: {marginInlineStart: 'auto'},
-  enrollmentStatus: { 
+  iconButton: { marginInlineStart: "auto" },
+  enrollmentStatus: {
     textTransform: "capitalize",
   },
   avatar: {

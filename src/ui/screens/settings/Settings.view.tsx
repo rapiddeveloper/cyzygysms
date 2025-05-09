@@ -1,10 +1,10 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
- 
+
 import SettingsItem from "../../components/SettingsItem";
 import { Stack } from "@grapp/stacks";
 import { Divider } from "../../components/Divider";
-import { EnrollmentStatus } from "../../../data/domain/models/Student";
+import { EnrollmentStatus } from "../../../data/domain/models/StudentProfile";
 import { SettingsViewProps } from "./Settings.types";
 
 /**
@@ -13,13 +13,10 @@ import { SettingsViewProps } from "./Settings.types";
  * @returns JSX.Element
  */
 
-
 const SettingsView = (props: SettingsViewProps) => {
- 
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Stack space={4} divider={<Divider  />}>
+      <Stack space={4} divider={<Divider />}>
         {props.settings.map((setting) => (
           <SettingsItem
             key={setting.kind}
@@ -39,6 +36,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     paddingInline: 20,
-    paddingBlock: 32
+    paddingBlock: 32,
   },
 });

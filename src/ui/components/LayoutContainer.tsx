@@ -1,14 +1,22 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { PropsWithChildren } from "react";
+import { Stack } from "@grapp/stacks";
 
 // This is a container component that will be used to wrap the layout of a screen
 
-type LayoutContainerProps = {} & PropsWithChildren;
+type LayoutContainerProps = {scrolls?: boolean} & PropsWithChildren;
 
-const LayoutContainer = (props: LayoutContainerProps) => {
+const LayoutContainer = ({ scrolls = false, children }: LayoutContainerProps) => {
+  if (!scrolls) {
+    return (
+      <Stack style={styles.container}>
+        {children}
+      </Stack>
+    );
+  }
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {props.children}
+      {children}
     </ScrollView>
   );
 };
