@@ -36,7 +36,7 @@ const schema = yup
     file: yup.object({
       uri: yup
         .string()
-        .required("File URI is required")
+        .required("Please select a photo")
         .test("is-valid-uri", "Invalid file URI", (value) =>
           value ? value.startsWith("http://") || value.startsWith("https://") || value.startsWith("file://") : false
         ),
@@ -96,6 +96,7 @@ export const AddStudentView = (props: AddStudentViewProps) => {
     // onChange(asset.uri);
   };
 
+ 
   return (
     <LayoutContainer scrolls={true}>
       <Stack space={4}>
@@ -118,7 +119,7 @@ export const AddStudentView = (props: AddStudentViewProps) => {
                 { color: theme.colors.error },
               ]}
             >
-              {errors.file.message}
+              {errors.file.uri?.message}
             </Text>
           )}
         </Stack>

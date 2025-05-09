@@ -12,7 +12,7 @@ import StudentProfileRepository from "../repositories/StudentProfile/StudentProf
 
 export interface StudentProfileFormStore {
   uploadProfilePhoto: (photoURL: string) => void;
-  createStudentProfile: (studentData: StudentProfileFormData) => Promise<void>;
+  createStudentProfile: (studentData: StudentProfileFormData) => Promise<StudentProfile>;
 }
 
 const createStudentProfileFormStore = (
@@ -27,16 +27,19 @@ const createStudentProfileFormStore = (
       // set({ photoURL });
     },
 
-    createStudentProfile: async (profileDetails: StudentProfileFormData) => {
-      const profile = await studentProfileRepository.createProfile(
+    createStudentProfile: async (profileDetails: StudentProfileFormData): Promise<StudentProfile> => {
+      const {profile, errorMsg} = await studentProfileRepository.createProfile(
         profileDetails
       );
-        if (profile.errorMsg) {
-            console.error("Error creating profile: ", profile.errorMsg);
-            return;
+        if (errorMsg) {
+            console.error("Error creating profile: ", errorMsg);
+            throw new Error(errorMsg);
         }
-
-        console.log("Profile created successfully: ", profile.profile);
+        if (profile === undefined) {
+            throw new Error("Unexpected error occurred");
+        }
+        console.log("Profile created successfully: ", profile);
+        return profile;
     },
   }));
 

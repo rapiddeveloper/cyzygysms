@@ -7,6 +7,7 @@ import { Image } from "expo-image";
 import { useCYZYGYSMSTheme } from "../providers/ThemeProvider";
 import { Divider } from "./Divider";
 import { IconButton } from "./IconButton";
+import { useSettingsStore } from "../hooks/useSettingsStore";
 
 /**
  *
@@ -26,8 +27,8 @@ type StudentProps = {
 
 const StudentListItem = (props: StudentProps) => {
   const { student, onPerformAction } = props;
-  const { theme } = useCYZYGYSMSTheme();
-  const { typography } = theme;
+    const {typography} = useSettingsStore((store) => store).currentTheme();
+  
 
   return (
     <Stack horizontal space={4}>

@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -8,8 +7,10 @@ import Home from "../screens/home";
 import AddStudent from "../screens/addstudent";
 import Settings from "../screens/settings";
 import { MainTabViewParamList } from "../../data/@types/Navigation";
-import { useCYZYGYSMSTheme } from "../providers/ThemeProvider";
-
+ 
+import { useSettingsStore } from "../hooks/useSettingsStore";
+import { StudentsProfilesStoreProvider } from "../providers/StudentsProfilesStoreProvider";
+ 
 const TabView = createBottomTabNavigator<MainTabViewParamList>();
 
 type TabBarIconProps = {
@@ -34,9 +35,10 @@ const tabBarIcon = (key: keyof MainTabViewParamList, props: TabBarIconProps) => 
 
 export default function MainTabView() {
 
-  const {theme} = useCYZYGYSMSTheme()
-   
+  const theme = useSettingsStore((store) => store).currentTheme();
+  
   return (
+    <StudentsProfilesStoreProvider>
     <TabView.Navigator
     initialRouteName='Home'
     screenOptions={{
@@ -51,6 +53,7 @@ export default function MainTabView() {
         tabBarInactiveTintColor: theme.colors.onPrimary, // Slightly transparent white for inactive tabs
       }}
     >
+     
       <TabView.Screen
         options={{
           tabBarIcon: (props) => tabBarIcon('Home', props),
@@ -66,6 +69,7 @@ export default function MainTabView() {
         name="AddStudent"
         component={AddStudent}
       />
+      
       <TabView.Screen
         options={{
             tabBarIcon: (props) => tabBarIcon('Settings', props),
@@ -75,5 +79,6 @@ export default function MainTabView() {
         component={Settings}
       />
     </TabView.Navigator>
+    </StudentsProfilesStoreProvider>
   );
 }

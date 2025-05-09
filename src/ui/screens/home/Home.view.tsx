@@ -7,10 +7,15 @@ import LayoutContainer from "../../components/LayoutContainer";
 import { HomeViewProps } from "./Home.types";
 
 export const HomeView = (props: HomeViewProps) => {
+
+  if (props.profiles.length === 0) {
+    return null
+  }
+  
   return (
     <FlatList
       ItemSeparatorComponent={() => <Divider style={styles.divider} />}
-      data={previewStudentsData}
+      data={props.profiles}
       keyExtractor={(item) => item.studentId}
       renderItem={({ item }) => (
         <StudentListItem

@@ -4,8 +4,8 @@ import { Control, Controller, FieldError } from "react-hook-form";
 import { Picker } from "@react-native-picker/picker";
 import { Stack } from "@grapp/stacks";
 import { EnrollmentStatus } from "../../data/domain/models/StudentProfile";
-import { useSettingsTheme } from "../hooks/useSettingsTheme";
-
+import { useSettingsStore } from "../hooks/useSettingsStore";
+ 
 interface EnrollmentPickerProps {
   control: Control<any>;
   error?: string;
@@ -17,20 +17,22 @@ export const EnrollmentPicker: React.FC<EnrollmentPickerProps> = ({
 }) => {
   const enrollmentStatuses = [...Object.values(EnrollmentStatus)];
 
-  const { theme } = useSettingsTheme();
+ const theme = useSettingsStore((store) => store).currentTheme();
+ 
 
   return (
     <Stack space={0}>
-      <Text style={styles.label}>Select Enrollment</Text>
+      <Text style={[styles.label, {color: theme.colors.onBackground}]}>Select Enrollment</Text>
       <Controller
         control={control}
         name="enrollmentStatus"
         render={({ field: { onChange, value } }) => (
           <Picker
             selectedValue={value === "" ? "Select Enrollment" : value}
-            style={styles.picker}
+            style={[styles.picker, { backgroundColor: theme.colors.background, color: 'white' }]}
             mode={"dropdown"}
             onValueChange={onChange}
+            itemStyle={{ color: theme.colors.onBackground }}
           >
             {enrollmentStatuses.map((status) => (
               <Picker.Item
@@ -62,13 +64,14 @@ const styles = StyleSheet.create({
   picker: {
     width: "100%",
     height: "auto",
-    backgroundColor: "white",
+  //  backgroundColor: "white",
     //   borderWidth: 1,
     //   borderColor: "black",
     //   borderRadius: 4,
   },
   pickerItem: {
     textTransform: "capitalize",
+    color: 'white'
   },
   error: {
     fontSize: 12,

@@ -37,8 +37,7 @@ export default function StudentPhotoPicker(props: StudentPhotoPickerProps) {
     setImage(props.currUri);
   }, [props.currUri]);
 
-  console.log("In editing")
-  console.log(image)
+  
   return (
     <Pressable style={styles.container} onPress={pickImage}>
       {image ? (

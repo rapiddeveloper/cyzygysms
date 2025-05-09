@@ -1,5 +1,5 @@
 import React from "react";
-import { createStore, StoreApi, useStore } from "zustand";
+import {  StoreApi } from "zustand";
 import SettingRepositoryRemote from "../../data/repositories/setting/SettingRepositoryRemote";
 import {
   createSettingsStore,
@@ -11,8 +11,7 @@ type BearStoreProviderProps = {
   children: React.ReactNode;
 };
 
-//type CreateSettingsStore = (settingRepo: SettingRepositoryRemote) => StoreApi<SettingsStore>
-export const SettingsStoreContext =
+ export const SettingsStoreContext =
   React.createContext<StoreApi<SettingsStore> | null>(null);
 
 export const SettingsStoreProvider = ({ children }: BearStoreProviderProps) => {
@@ -30,10 +29,4 @@ export const SettingsStoreProvider = ({ children }: BearStoreProviderProps) => {
 };
 
 
-// export const useSettingsStore = <U>(selector: (state: SettingsStore) => U) => {
-//   const store = React.useContext(SettingsStoreContext)
-//   if (!store) {
-//     throw new Error('useSettingsStore must be used within a SettingsStoreProvider')
-//   }
-//   return useStore(store, selector)
-// }
+ 

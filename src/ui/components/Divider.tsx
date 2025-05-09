@@ -1,6 +1,4 @@
 import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { useCYZYGYSMSTheme } from '../providers/ThemeProvider';
-import { useShallow } from 'zustand/shallow';
 import { useSettingsStore } from '../hooks/useSettingsStore';
  
 type DividerProps = {
@@ -10,16 +8,8 @@ type DividerProps = {
 
 export const Divider: React.FC<DividerProps> = ({ vertical = false, style }) => {
  
-      const settingsStore = useSettingsStore(useShallow(store =>({
-     
-      currentTheme: store.currentTheme
-     })))
-  
-  //   if (props.payload === undefined) {
-  //     return null;
-  //   }
-  
-    let theme = settingsStore.currentTheme()
+     const theme = useSettingsStore((store) => store).currentTheme();
+    
 
   return (
     <View

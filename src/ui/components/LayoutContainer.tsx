@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import React, { PropsWithChildren } from "react";
 import { Stack } from "@grapp/stacks";
  import { useSettingsStore } from "../hooks/useSettingsStore";
