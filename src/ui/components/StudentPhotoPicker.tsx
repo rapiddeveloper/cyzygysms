@@ -53,10 +53,8 @@ export default function StudentPhotoPicker(props: StudentPhotoPickerProps) {
         </View>
       ) : (
         <Stack
-          // style={{backgroundColor: 'gray'}}
-           align={"center"}
-           
-             style={[
+          align={"center"}
+          style={[
             styles.image,
             { width: "30%", aspectRatio: 1, backgroundColor: "gray", justifyContent: "center", alignItems: "center" },
           ]}

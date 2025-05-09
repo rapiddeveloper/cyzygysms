@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, TextInput, StyleSheet } from 'react-native';
 import { Control, Controller, FieldError, FieldValues, Path } from 'react-hook-form';
 import { Stack } from '@grapp/stacks';
+import { useSettingsTheme } from '../hooks/useSettingsTheme';
 
 interface TextFieldProps<T extends FieldValues> {
   control: Control<T>;
@@ -18,6 +19,9 @@ export const TextField = <T extends FieldValues>({
   rules = {}, 
   error 
 }: TextFieldProps<T>) => {
+
+  const {theme} = useSettingsTheme() 
+
   return (
     <Stack space={1}>
       <Text style={styles.label}>{label}</Text>
@@ -34,7 +38,7 @@ export const TextField = <T extends FieldValues>({
         name={name}
         rules={rules}
       />
-      {error && <Text style={styles.label}>{error.message}</Text>}
+      {error && <Text style={[styles.label, {color: theme.colors.error}]}>{error.message}</Text>}
     </Stack>
   );
 };
