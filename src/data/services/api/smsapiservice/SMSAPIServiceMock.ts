@@ -46,6 +46,31 @@ class SMSAPIServiceMock extends SMSAPIService {
         });
     }
 
+    async patchProfileData(profileDetails: StudentProfileFormData, profileId: string, photoURL: string): Promise<Result<StudentProfileAPIModel, Error>> {
+      return new Promise((resolve) => {
+          setTimeout(() => {
+              // Simulate a successful API response
+              const mockResponse: StudentProfileAPIModel = {
+                  name: profileDetails.name,
+                  email: profileDetails.email,
+                  enrollment: profileDetails.enrollmentStatus,
+                  studentId: profileId, // Generate a unique student ID
+                  photoURL: photoURL,
+                  lastUpdated: new Date().toISOString(),
+                  createdAt: new Date().toISOString(),
+              };
+
+              // Log the mock API request
+            console.log("Mock API Request: Updating Student Profile", profileDetails);
+            const result: Result<StudentProfileAPIModel, ResultType.Success> = {
+              value: mockResponse,
+              type: ResultType.Success,
+            };
+            resolve(result);
+          }, 3000); // Simulate a 1-second delay
+        });
+  }
+
 }
 
 export default SMSAPIServiceMock;

@@ -3,9 +3,9 @@ import { FlatList, StyleSheet, Text } from "react-native";
 import { previewStudentsData } from "../../../data/domain/models/StudentProfile";
 import StudentListItem from "../../components/StudentListItem";
 import { Divider } from "../../components/Divider";
-import LayoutContainer from "../../components/LayoutContainer";
-import { HomeViewProps } from "./Home.types";
-
+ import { HomeViewProps } from "./Home.types";
+import { constants } from "../../../data/utilites/constants";
+  
 export const HomeView = (props: HomeViewProps) => {
 
   if (props.profiles.length === 0) {
@@ -14,6 +14,7 @@ export const HomeView = (props: HomeViewProps) => {
   
   return (
     <FlatList
+      contentContainerStyle={styles.container}
       ItemSeparatorComponent={() => <Divider style={styles.divider} />}
       data={props.profiles}
       keyExtractor={(item) => item.studentId}
@@ -29,8 +30,9 @@ export const HomeView = (props: HomeViewProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
+   // flex: 1,
+    paddingInline: constants.containerPaddingInline,
+    paddingBlock: constants.containerPaddingBlock
   },
   divider: {
     marginBlock: 16,

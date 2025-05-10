@@ -1,11 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { StudentProfile } from "../../data/domain/models/StudentProfile";
 import { Box, Stack } from "@grapp/stacks";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Image } from "expo-image";
-import { useCYZYGYSMSTheme } from "../providers/ThemeProvider";
-import { Divider } from "./Divider";
+ import { Image } from "expo-image";
+ 
 import { IconButton } from "./IconButton";
 import { useSettingsStore } from "../hooks/useSettingsStore";
 
@@ -31,7 +29,7 @@ const StudentListItem = (props: StudentProps) => {
   
 
   return (
-    <Stack horizontal space={4}>
+    <Stack horizontal space={4} >
       <Box>
         <Image source={{ uri: student.photoURL }} style={styles.avatar} />
       </Box>

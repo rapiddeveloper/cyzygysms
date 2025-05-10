@@ -10,6 +10,7 @@ import { MainTabViewParamList } from "../../data/@types/Navigation";
  
 import { useSettingsStore } from "../hooks/useSettingsStore";
 import { StudentsProfilesStoreProvider } from "../providers/StudentsProfilesStoreProvider";
+import { StudentProfileFormStoreProvider } from "../providers/StudentProfileFormStoreProvider";
  
 const TabView = createBottomTabNavigator<MainTabViewParamList>();
 
@@ -31,6 +32,12 @@ const tabBarIcon = (key: keyof MainTabViewParamList, props: TabBarIconProps) => 
             return <MaterialIcons name="home" {...props} />;
     }
 }
+
+const AddStudentWithProvider = () => (
+  <StudentProfileFormStoreProvider>
+     <AddStudent />
+  </StudentProfileFormStoreProvider>
+)
  
 
 export default function MainTabView() {
@@ -63,11 +70,12 @@ export default function MainTabView() {
       />
       <TabView.Screen
         options={{
+            
             tabBarIcon: (props) => tabBarIcon('AddStudent', {...props, size: 35, color: 'red'}),
             tabBarLabel: ''
         }}
         name="AddStudent"
-        component={AddStudent}
+        component={AddStudentWithProvider}
       />
       
       <TabView.Screen

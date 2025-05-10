@@ -7,12 +7,16 @@ import { SheetManager } from "react-native-actions-sheet";
 import { set } from "react-hook-form";
 import { useStudentsProfilesStore } from "../../hooks/useStudentProfilesStore";
 import { RequestStatus } from "../../../data/@types/Result";
+import { useNavigation } from "@react-navigation/native";
+import { MainTabViewScreenProps } from "../../../data/@types/Navigation";
 
 const Home = () => {
+  const navigation =
+    useNavigation<MainTabViewScreenProps<"AddStudent">["navigation"]>();
 
   const [selectedStudent, setSelectedStudent] =
     React.useState<StudentProfile | null>(null);
-    const {profiles} = useStudentsProfilesStore((store) => store)
+  const { profiles } = useStudentsProfilesStore((store) => store);
 
   const handleProfileSelect = (student: StudentProfile) => {
     console.log(student.studentId);
@@ -24,6 +28,12 @@ const Home = () => {
   };
   const handleEditProfile = () => {
     console.log("Edit Profile");
+    setSelectedStudent(null);
+    navigation.navigate('AddStudent', {studentId: selectedStudent?.studentId})
+  };
+
+  const handleClose = () => {
+    setSelectedStudent(null);
   };
 
   useEffect(() => {
@@ -32,6 +42,7 @@ const Home = () => {
         payload: {
           onDeleteProfile: handleDeleteProfile,
           onEditProfile: handleEditProfile,
+          onClose: handleClose,
         },
       });
     } else {

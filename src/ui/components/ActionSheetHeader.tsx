@@ -1,27 +1,42 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { Bleed } from '@grapp/stacks'
-import { Divider } from './Divider'
-import { useSettingsTheme } from '../hooks/useSettingsTheme'
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from "react-native";
+import React from "react";
+import { Bleed, Stack } from "@grapp/stacks";
+import { Divider } from "./Divider";
+import { useSettingsTheme } from "../hooks/useSettingsTheme";
 
-type ActionSheetHeaderProps = {     
-    title: string
-}
+type ActionSheetHeaderProps = {
+  title: string;
+  containerStyle?: StyleProp<ViewStyle>;
+  button?: () => React.ReactNode;
+};
 
 const ActionSheetHeader = (props: ActionSheetHeaderProps) => {
-  const { title } = props;
+  const { title, button } = props;
 
-  const {theme} = useSettingsTheme()
+  const { theme } = useSettingsTheme();
   return (
-    <View>
-       <Text style={[theme.typography.h6Headline, {textTransform: 'capitalize', color: theme.colors.onBackground}]}>{title}</Text>
-       <Bleed horizontal={4}>
-       <Divider  />
-       </Bleed>
-    </View>
-  )
-}
+    <Stack
+      divider={
+        <Bleed horizontal={4}>
+          <Divider />
+        </Bleed>
+      }
+    >
+      <Stack horizontal style={[props.containerStyle]}>
+        <Text
+          style={[
+            theme.typography.h6Headline,
+            { textTransform: "capitalize", color: theme.colors.onBackground },
+          ]}
+        >
+          {title}
+        </Text>
+        {button?.()}
+      </Stack>
+    </Stack>
+  );
+};
 
-export default ActionSheetHeader
+export default ActionSheetHeader;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

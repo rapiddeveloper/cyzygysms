@@ -32,7 +32,7 @@ const StudentProfileActionSheet = (
   }
 
   return (
-    <ActionSheet>
+    <ActionSheet onClose={()=>payload.onClose()}>
       <ActionSheetContentContainer>
         <Pressable
           onPress={() => {

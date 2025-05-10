@@ -1,7 +1,12 @@
-const constants = {
+import { EnrollmentStatus, StudentProfileFormData } from "../domain/models/StudentProfile"
+
+export const constants = {
     actionSheetHorizontalPadding: 16,
     actionSheetVerticalPadding: 24,
     actionSheetVerticalSpacing: 4,
+
+    containerPaddingBlock: 32,
+    containerPaddingInline: 20,
 
     // Form styles
     formPhotoErrorFontSize: 12,
@@ -25,4 +30,7 @@ const constants = {
     inputBorderRadius: 4,
 }
 
-export default constants
+export const emptyFormData: StudentProfileFormData = {file: {uri: '', name: '-1', type: '-1'}, name: '', enrollmentStatus: EnrollmentStatus.ENROLLED, email: ''}
+
+
+ 

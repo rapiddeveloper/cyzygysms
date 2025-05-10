@@ -49,8 +49,42 @@ class StudentProfileRepositoryRemote extends StudentProfileRepository {
     return { profile };
   }
 
-  async updateProfile(profile: StudentProfile): Promise<boolean> {
-    throw new Error("Method not implemented.");
+  async updateProfile(profileDetails: StudentProfileFormData, profileId: string): Promise<{profile?: StudentProfile, errorMsg?: string}> {
+    
+    // updates image
+    const uploadImageResult = await this.smsAPIService.uploadImage(
+      profileId,
+      profileDetails.file
+    );
+    if (uploadImageResult.type === ResultType.Failure) {
+      return {
+        errorMsg: uploadImageResult.error.message,
+      };
+    }
+
+    
+    const patchedProfileResult = await this.smsAPIService.patchProfileData(
+      profileDetails,
+      profileId,
+      uploadImageResult.value
+    );
+
+    if (patchedProfileResult.type === ResultType.Failure) {
+      return {
+        errorMsg: patchedProfileResult.error.message,
+      };
+    }
+
+    const profile: StudentProfile = {
+      fullname: patchedProfileResult.value.name,
+      email: patchedProfileResult.value.email,
+      enrollmentStatus: patchedProfileResult.value
+        .enrollment as EnrollmentStatus,
+      studentId: patchedProfileResult.value.studentId,
+      photoURL: patchedProfileResult.value.photoURL,  
+    };
+
+    return {profile }
   }
 
   async deleteProfile(studentId: string): Promise<boolean> {

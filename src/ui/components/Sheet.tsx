@@ -7,6 +7,7 @@ import StudentProfileActionSheet from "./StudentProfileActionSheet";
 type StudentProfileActionSheetProps = {
   onDeleteProfile: () => void;
   onEditProfile: () => void;
+  onClose: ()=> void
 };
 
 registerSheet("settings-bottom-sheet", SettingsBottomSheet);

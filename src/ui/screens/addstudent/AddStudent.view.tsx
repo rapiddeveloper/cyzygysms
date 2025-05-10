@@ -1,26 +1,34 @@
 import { Box, Stack } from "@grapp/stacks";
 import { Button } from "@react-navigation/elements";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity } from "react-native";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { TextField } from "../../components/TextField";
-import { EnrollmentStatus, StudentProfileFormData } from "../../../data/domain/models/StudentProfile";
+import {
+  EnrollmentStatus,
+  StudentProfileFormData,
+} from "../../../data/domain/models/StudentProfile";
 import StudentPhotoPicker from "../../components/StudentPhotoPicker";
 import { ImagePickerAsset } from "expo-image-picker";
 import { EnrollmentPicker } from "../../components/EnrollmentPicker";
 import { useSettingsTheme } from "../../hooks/useSettingsTheme";
 import LayoutContainer from "../../components/LayoutContainer";
-import constants from "../../../data/utilites/constants";
-import { useSettingsStore } from "../../hooks/useSettingsStore";
+ import { useSettingsStore } from "../../hooks/useSettingsStore";
 import { useShallow } from "zustand/shallow";
- 
+import ActionSheetHeader from "../../components/ActionSheetHeader";
+import { IconButton } from "../../components/IconButton";
+import { constants } from "../../../data/utilites/constants";
 
 type AddStudentViewProps = {
   onPhotoUpload: (photo: string) => Promise<void>;
   onSubmit: (data: StudentProfileFormData) => void;
+  onClose: () => void;
+  isSubmitting?: boolean;
+  draft: StudentProfileFormData
+  isNew: boolean
 };
 
 const emailRegex =
@@ -33,37 +41,44 @@ const schema = yup
       .matches(emailRegex, "Please enter a valid email")
       .required("Email is required"),
     enrollmentStatus: yup.string().required("Enrollment status is required"),
-    file: yup.object({
-      uri: yup
-        .string()
-        .required("Please select a photo")
-        .test("is-valid-uri", "Invalid file URI", (value) =>
-          value ? value.startsWith("http://") || value.startsWith("https://") || value.startsWith("file://") : false
-        ),
-      name: yup.string().required("File name is required"),
-      type: yup.string().required("File type is required"),
-    }).required(), // Ensure the file object is required
+    file: yup
+      .object({
+        uri: yup
+          .string()
+          .required("Please select a photo")
+          .test("is-valid-uri", "Invalid file URI", (value) =>
+            value
+              ? value.startsWith("http://") ||
+                value.startsWith("https://") ||
+                value.startsWith("file://")
+              : false
+          ),
+        name: yup.string().required("File name is required"),
+        type: yup.string().required("File type is required"),
+      })
+      .required(), // Ensure the file object is required
   })
   .required();
 
 export const AddStudentView = (props: AddStudentViewProps) => {
-  //const { theme } = useSettingsTheme();
-  const settingsStore = useSettingsStore(
-      useShallow((store) => ({
-        updateValue: store.updateValue,
-        settings: store.settings,
-        currentTheme: store.currentTheme,
-      }))
-    );
-  
-    //   if (props.payload === undefined) {
-    //     return null;
-    //   }
-  
-    let theme = settingsStore.currentTheme();
+   const settingsStore = useSettingsStore(
+    useShallow((store) => ({
+      updateValue: store.updateValue,
+      settings: store.settings,
+      currentTheme: store.currentTheme,
+    }))
+  );
 
-  console.log('theme', theme)
-  const {
+  const {draft} = props
+
+  //   if (props.payload === undefined) {
+  //     return null;
+  //   }
+
+  let theme = settingsStore.currentTheme();
+
+  console.log('draft', draft)
+   const {
     register,
     setValue,
     handleSubmit,
@@ -72,18 +87,17 @@ export const AddStudentView = (props: AddStudentViewProps) => {
     formState: { errors },
   } = useForm<StudentProfileFormData>({
     defaultValues: {
-      name: "",
-      email: "",
-      enrollmentStatus: EnrollmentStatus.ENROLLED,
-      file: undefined,
+      name: draft.name,
+      email: draft.email,
+      enrollmentStatus: draft.enrollmentStatus,
+      file: draft.file,
     },
     resolver: yupResolver(schema),
   });
 
- 
   const onSubmit = (data: StudentProfileFormData) => {
     console.log("onSubmit", data);
-    
+
     props.onSubmit(data);
   };
 
@@ -91,15 +105,43 @@ export const AddStudentView = (props: AddStudentViewProps) => {
     asset: ImagePickerAsset,
     onChange: (value: string) => void
   ) => {
-    await props.onPhotoUpload(asset.uri);
-    setValue("file", {uri: asset.uri, name: asset.fileName || "", type: asset.mimeType || ""});
+   // await props.onPhotoUpload(asset.uri);
+    setValue("file", {
+      uri: asset.uri,
+      name: asset.fileName || "",
+      type: asset.mimeType || "",
+    });
     // onChange(asset.uri);
   };
 
- 
+
+  useEffect(()=>{
+     setValue('name', draft.name)
+     setValue('email', draft.email)
+     setValue('enrollmentStatus', draft.enrollmentStatus)
+     setValue('file', draft.file)
+  }, [draft])  
+
   return (
     <LayoutContainer scrolls={true}>
       <Stack space={4}>
+        <ActionSheetHeader
+          containerStyle={{ justifyContent: "center" }}
+          title={props.isNew ?"Create Profile" : "Edit Profile"} 
+          button={()=>(
+            <IconButton
+              style={{position: "absolute", right: 0, }}
+              name="close"
+              onPress={() => {
+                 props.onClose();
+
+                 reset()
+                //settingsStore.updateValue("addStudentSheet", false);
+              }}
+            />
+          )}
+        />
+
         <Stack space={4} style={{ height: 200, alignItems: "center" }}>
           <Controller
             control={control}
@@ -107,7 +149,7 @@ export const AddStudentView = (props: AddStudentViewProps) => {
             render={({ field: { onChange, value } }) => (
               <StudentPhotoPicker
                 onImageLoaded={(asset) => handleImageLoaded(asset, onChange)}
-                currUri={null}
+                currUri={value.uri}
               />
             )}
           />
@@ -152,8 +194,14 @@ export const AddStudentView = (props: AddStudentViewProps) => {
           ]}
           onPress={handleSubmit(onSubmit)}
         >
-          <Text style={{ color: theme.colors.onPrimary }}>Submit</Text>
-        </TouchableOpacity>
+          {
+            props.isSubmitting ? (
+              <ActivityIndicator color={theme.colors.onPrimary } />
+            ) : (
+              <Text style={{ color: theme.colors.onPrimary }}>Submit</Text>
+            )
+          }
+         </TouchableOpacity>
       </Stack>
     </LayoutContainer>
   );

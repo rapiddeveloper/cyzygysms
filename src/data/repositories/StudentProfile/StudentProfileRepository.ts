@@ -2,7 +2,7 @@ import { StudentProfile, StudentProfileFormData } from "../../domain/models/Stud
 
 abstract class StudentProfileRepository {
     abstract createProfile(profileDetails: StudentProfileFormData): Promise<{profile?: StudentProfile, errorMsg?: string}>
-    abstract updateProfile(profile: StudentProfile): Promise<boolean>;
+    abstract updateProfile(profileDetails: StudentProfileFormData, profileId: string): Promise<{profile?: StudentProfile, errorMsg?: string}>;
     abstract deleteProfile(studentId: string): Promise<boolean>;
     abstract getProfile(studentId: string): Promise<StudentProfile | null>;
     abstract getAllProfiles(): Promise<StudentProfile[]>;

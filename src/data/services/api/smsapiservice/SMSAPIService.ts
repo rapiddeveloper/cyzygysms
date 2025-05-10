@@ -4,6 +4,7 @@ import { StudentProfileAPIModel } from "../model/StudentProfileAPIModel";
 
 abstract class SMSAPIService {
     abstract postProfileData(profileDetails: StudentProfileFormData): Promise<Result<StudentProfileAPIModel, Error>> 
+    abstract patchProfileData(profileDetails: StudentProfileFormData, profileId: string, photoURL: string): Promise<Result<StudentProfileAPIModel, Error>> 
     abstract uploadImage(studentId: string, file: FileObj): Promise<Result<string, Error>>
 }
 

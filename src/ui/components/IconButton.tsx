@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, ViewStyle, StyleProp } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
-import { useCYZYGYSMSTheme } from "../providers/ThemeProvider";
+ import { useSettingsStore } from '../hooks/useSettingsStore';
 
 type IconButtonProps = {
   name: keyof typeof MaterialIcons.glyphMap;
@@ -18,7 +18,8 @@ export const IconButton: React.FC<IconButtonProps> = ({
   onPress,
   style,
 }) => {
-  const { theme } = useCYZYGYSMSTheme();
+   const  theme  = useSettingsStore((store) => store).currentTheme();
+  
 
   return (
     <TouchableOpacity 
