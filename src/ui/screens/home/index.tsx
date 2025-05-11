@@ -41,12 +41,6 @@ const Home = () => {
         Toast.LONG,
         Toast.BOTTOM
       );
-      // Toast.showWithGravity(
-      //   'This is a long toast at the top.',
-      //   3000,
-      //   Toast.LONG,
-      //   Toast.TOP,
-      // );
     } catch (error) {}
   };
   const handleEditProfile = () => {
@@ -78,9 +72,21 @@ const Home = () => {
     <View>
       <HomeView profiles={profiles} onProfileSelect={handleProfileSelect} />
       {profiles.length === 0 && (
-        <Stack align={'center'} height={'100%'} style={{justifyContent: 'center'}}>
-            <Text style={theme.typography.h6Headline}>No Student Profile Available.</Text>
-            <Text style={[theme.typography.body2, {verticalAlign: 'middle', backgroundColor: 'red'}]}>Tap the <IconButton   name="add-circle-outline"/> button to create a student profile</Text>
+        <Stack
+          space={1}
+          align={"center"}
+          height={"100%"}
+          style={{ justifyContent: "center" }}
+        >
+          <Text style={theme.typography.h6Headline}>
+            No Student Profile Available.
+          </Text>
+          
+          <Stack align={'center'} horizontal style={[theme.typography.body2]}>
+            <Text>Tap the</Text>
+            <IconButton size={30} name="add-circle-outline" />
+            <Text>button to create a student profile</Text>
+          </Stack>
         </Stack>
       )}
 

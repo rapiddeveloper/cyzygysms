@@ -1764,6 +1764,31 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-simple-toast (3.3.2):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Toast (~> 4)
+    - Yoga
   - react-native-unistyles (2.32.0):
     - DoubleConversion
     - glog
@@ -2418,6 +2443,7 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.17)
   - SocketRocket (0.7.1)
+  - Toast (4.1.1)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -2481,6 +2507,7 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-simple-toast (from `../node_modules/react-native-simple-toast`)
   - react-native-unistyles (from `../node_modules/react-native-unistyles`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-oscompat (from `../node_modules/react-native/ReactCommon/oscompat`)
@@ -2531,6 +2558,7 @@ SPEC REPOS:
     - SDWebImageSVGCoder
     - SDWebImageWebPCoder
     - SocketRocket
+    - Toast
 
 EXTERNAL SOURCES:
   boost:
@@ -2650,6 +2678,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-mmkv"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-simple-toast:
+    :path: "../node_modules/react-native-simple-toast"
   react-native-unistyles:
     :path: "../node_modules/react-native-unistyles"
   React-NativeModulesApple:
@@ -2791,6 +2821,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: ca2804a25fdcefffa0aa942aa23ab53b99614a34
   react-native-mmkv: 2421db62a08da22d1b97ea4d55adfee9ea0f88a1
   react-native-safe-area-context: 00d03dc688ba86664be66f9e3f203fc7d747d899
+  react-native-simple-toast: 24f8d9808febe98e699b149227ff23e0a6488209
   react-native-unistyles: 9108ee8b450ee5aa4c8eed38d49414f90f423b85
   React-NativeModulesApple: 452b86b29fae99ed0a4015dca3ad9cd222f88abf
   React-oscompat: ef5df1c734f19b8003e149317d041b8ce1f7d29c
@@ -2834,6 +2865,7 @@ SPEC CHECKSUMS:
   SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c
   SDWebImageWebPCoder: e38c0a70396191361d60c092933e22c20d5b1380
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
+  Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e
   Yoga: c758bfb934100bb4bf9cbaccb52557cee35e8bdf
 
 PODFILE CHECKSUM: 546fe1124db22094cb73dbe35e9bc5754f6af411

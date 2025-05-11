@@ -28,6 +28,12 @@ export const constants = {
     inputHeight: 40,
     inputPadding: 10,
     inputBorderRadius: 4,
+    input: {
+        borderWidth: 2,
+        height: 40,
+        padding: 10,
+        borderRadius: 4,
+      }
 }
 
 export const emptyFormData: StudentProfileFormData = {file: {uri: '', name: '-1', type: '-1'}, name: '', enrollmentStatus: EnrollmentStatus.ENROLLED, email: ''}

@@ -118,8 +118,7 @@ export const AddStudentView = (props: AddStudentViewProps) => {
 
   useEffect(()=>{
     
-     console.log("setting values")
-     reset({
+      reset({
       name: draft.name,
       email: draft.email,
       enrollmentStatus: draft.enrollmentStatus,
@@ -149,6 +148,7 @@ export const AddStudentView = (props: AddStudentViewProps) => {
           button={()=>(
             <IconButton
               style={{position: "absolute", right: 0 }}
+              color={props.isSubmitting ? theme.colors.onBackground : theme.colors.outline}
               name="close"
               onPress={() => {
                  if (props.isSubmitting) {
@@ -200,11 +200,11 @@ export const AddStudentView = (props: AddStudentViewProps) => {
           rules={{ required: true }}
           error={errors.email}
         />
-        <EnrollmentPicker
+         <EnrollmentPicker
           control={control}
           error={errors.enrollmentStatus?.message}
         />
-
+      
         <TouchableOpacity
           style={[
             styles.button,
@@ -251,11 +251,5 @@ const styles = StyleSheet.create({
     padding: constants.containerPadding,
     backgroundColor: "#0e101c",
   },
-  input: {
-    backgroundColor: "white",
-    borderColor: "none",
-    height: constants.inputHeight,
-    padding: constants.inputPadding,
-    borderRadius: constants.inputBorderRadius,
-  },
+  input: constants.input
 });

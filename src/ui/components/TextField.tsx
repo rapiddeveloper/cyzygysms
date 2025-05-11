@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TextInput, StyleSheet } from "react-native";
+import { Text, TextInput, StyleSheet, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from "react-native";
 import {
   Control,
   Controller,
@@ -28,6 +28,10 @@ export const TextField = <T extends FieldValues>({
   const theme = useSettingsStore((store) => store).currentTheme();
 
   return (
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
     <Stack space={1}>
       <Text style={[styles.label, { color: theme.colors.onBackground }]}>
         {label}
@@ -58,6 +62,8 @@ export const TextField = <T extends FieldValues>({
         </Text>
       )}
     </Stack>
+    </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

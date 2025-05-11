@@ -2,9 +2,10 @@ import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { Control, Controller, FieldError } from "react-hook-form";
 import { Picker } from "@react-native-picker/picker";
-import { Stack } from "@grapp/stacks";
+import { Box, Stack } from "@grapp/stacks";
 import { EnrollmentStatus } from "../../data/domain/models/StudentProfile";
 import { useSettingsStore } from "../hooks/useSettingsStore";
+import { constants } from "../../data/utilites/constants";
 
 interface EnrollmentPickerProps {
   control: Control<any>;
@@ -28,6 +29,7 @@ export const EnrollmentPicker: React.FC<EnrollmentPickerProps> = ({
         control={control}
         name="enrollmentStatus"
         render={({ field: { onChange, value } }) => (
+         
           <Picker
             selectedValue={value === "" ? "Select Enrollment" : value}
             style={[
@@ -56,6 +58,7 @@ export const EnrollmentPicker: React.FC<EnrollmentPickerProps> = ({
               />
             ))}
           </Picker>
+         
         )}
       />
       {error && (
@@ -75,7 +78,7 @@ const styles = StyleSheet.create({
   picker: {
     width: "100%",
     height: "auto",
-    //  backgroundColor: "white",
+      
     //   borderWidth: 1,
     //   borderColor: "black",
     //   borderRadius: 4,

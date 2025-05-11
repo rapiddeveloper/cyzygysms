@@ -6,9 +6,9 @@
  * form and the uploading of the student's photo.
  */
 
-import uuid from "react-native-uuid";
-import { Modal, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import {  Modal, StyleSheet, Text, View } from "react-native";
+import React, {  useState } from "react";
+import Toast from "react-native-simple-toast";
 import { AddStudentView } from "./AddStudent.view";
 import useStudentProfileFormStore from "../../hooks/useStudentProfileFormStore";
 import {
@@ -66,11 +66,21 @@ const AddStudent = () => {
         const createdProfile = await createProfile(submittedData);
         if (createdProfile !== null) {
           addProfile(createdProfile);
+          Toast.showWithGravity(
+            `Profile created successfull`,
+            Toast.LONG,
+            Toast.BOTTOM
+          );
         }
       } else {
         const updatedProfile = await updateProfile(submittedData, studentId!);
         if (updatedProfile !== null) {
           replaceProfile(updatedProfile);
+          Toast.showWithGravity(
+            `Profile updated successfull`,
+            Toast.LONG,
+            Toast.BOTTOM
+          );
         }
       }
       //setProfileToEdit(null)

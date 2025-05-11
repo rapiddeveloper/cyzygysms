@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
  
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -36,12 +36,14 @@ const [fontsLoaded] = useFonts({
     <SettingsStoreProvider>
     <NavigationContainer>
       <SafeAreaProvider>
+        {/* <SafeAreaView style={{flex: 1}}> */}
         <SheetProvider>
           <RootStack.Navigator screenOptions={{ headerShown: false, headerStyle: { backgroundColor: '#fff' } }}>
             <RootStack.Screen name="MainTabs" component={MainTabView} />
           </RootStack.Navigator>
           <StatusBar style="auto" />
         </SheetProvider>
+        {/* </SafeAreaView> */}
       </SafeAreaProvider>
     </NavigationContainer>
     </SettingsStoreProvider>
