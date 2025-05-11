@@ -11,6 +11,7 @@ export interface StudentsProfilesStore {
   addProfile: (profile: StudentProfile) => void;
   getProfile: (profileId: string) => StudentProfile | null;
   replaceProfile: (profile: StudentProfile) => void;
+  deleteProfile: (profileId: string) => Promise<boolean>
 }
 
 
@@ -41,19 +42,39 @@ export const createStudentsProfilesStore = (
         profiles: [],
         addProfile: (profile: StudentProfile) => {
           set((state) => ({
-            profiles: [...state.profiles, profile],
+            profiles: [{...profile}, ...state.profiles],
           }));
         },
+        deleteProfile: async (profileId: string): Promise<boolean> => {
+          set((prev)=>({
+            profiles: [...prev.profiles.filter((profile)=> profile.studentId !== profileId)]
+          }))
+            const {status, errorMsg} = await studentProfileRepository.deleteProfile(profileId)
+            if (errorMsg) {
+              throw Error(errorMsg)
+            }
+
+            if (status === undefined) {
+              throw Error("Unexpected Errror occurred")
+            }
+
+          
+            return status
+        },
+
         getProfile: (profileId: string): StudentProfile | null => {
            const found = get().profiles.find((profile)=> profile.studentId === profileId)
            return found !== undefined ? found : null
         }, 
         replaceProfile: (profile: StudentProfile) => {
-          const foundIdx = get().profiles.findIndex((profile)=> profile.studentId === profile.studentId)
-          if (foundIdx === -1) {return}
-          let temp = [...get().profiles]
-          temp[foundIdx] = profile
-          set({profiles: temp})
+          // const foundIdx = get().profiles.findIndex((profile)=> profile.studentId === profile.studentId)
+          // if (foundIdx === -1) {return}
+          // let temp = [...get().profiles]
+          // temp[foundIdx] = profile
+          // set({profiles: temp})
+          set((prev)=>({
+            profiles: [...prev.profiles.map((currProfile)=> currProfile.studentId === profile.studentId ? profile : currProfile)]
+          }))
         }
       }),
       {

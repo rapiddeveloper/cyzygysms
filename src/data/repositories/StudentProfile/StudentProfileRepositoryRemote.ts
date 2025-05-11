@@ -87,8 +87,21 @@ class StudentProfileRepositoryRemote extends StudentProfileRepository {
     return {profile }
   }
 
-  async deleteProfile(studentId: string): Promise<boolean> {
-    throw new Error("Method not implemented.");
+  async deleteProfile(studentId: string): Promise<{status?: boolean, errorMsg?: string}> {
+    const deletedProfileResult = await this.smsAPIService.deleteProfileData(
+     studentId
+    );
+
+    
+    if (deletedProfileResult.type === ResultType.Failure) {
+      return {
+        errorMsg: deletedProfileResult.error.message,
+      };
+    }
+
+
+
+    return {status: deletedProfileResult.value}
   }
 
   async getProfile(studentId: string): Promise<StudentProfile | null> {

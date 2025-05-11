@@ -47,8 +47,10 @@ export default function MainTabView() {
   return (
     <StudentsProfilesStoreProvider>
     <TabView.Navigator
+     
     initialRouteName='Home'
     screenOptions={{
+        
         headerStyle: {
           backgroundColor: theme.colors.primary800,  
         },
@@ -69,11 +71,13 @@ export default function MainTabView() {
         component={Home}
       />
       <TabView.Screen
+         initialParams={{studentId: ""}}
         options={{
-            
-            tabBarIcon: (props) => tabBarIcon('AddStudent', {...props, size: 35, color: 'red'}),
+            animation: 'shift',
+            tabBarIcon: (props) => tabBarIcon('AddStudent', {...props, size: 30}),
             tabBarLabel: ''
         }}
+        
         name="AddStudent"
         component={AddStudentWithProvider}
       />

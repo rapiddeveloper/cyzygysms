@@ -21,6 +21,7 @@ import { useShallow } from "zustand/shallow";
 import ActionSheetHeader from "../../components/ActionSheetHeader";
 import { IconButton } from "../../components/IconButton";
 import { constants } from "../../../data/utilites/constants";
+import { useFocusEffect } from "@react-navigation/native";
 
 type AddStudentViewProps = {
   onPhotoUpload: (photo: string) => Promise<void>;
@@ -29,7 +30,7 @@ type AddStudentViewProps = {
   isSubmitting?: boolean;
   draft: StudentProfileFormData
   isNew: boolean
-};
+ };
 
 const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -77,7 +78,7 @@ export const AddStudentView = (props: AddStudentViewProps) => {
 
   let theme = settingsStore.currentTheme();
 
-  console.log('draft', draft)
+ // console.log('draft', draft)
    const {
     register,
     setValue,
@@ -116,11 +117,28 @@ export const AddStudentView = (props: AddStudentViewProps) => {
 
 
   useEffect(()=>{
-     setValue('name', draft.name)
-     setValue('email', draft.email)
-     setValue('enrollmentStatus', draft.enrollmentStatus)
-     setValue('file', draft.file)
-  }, [draft])  
+    
+     console.log("setting values")
+     reset({
+      name: draft.name,
+      email: draft.email,
+      enrollmentStatus: draft.enrollmentStatus,
+      file: draft.file
+    })
+  }, [draft.name]) 
+  
+  
+
+  /*
+  useEffect(()=>{
+     if (props.shouldReset) {
+      console.log('reseting')
+      reset()
+     }
+   
+  }, [props.shouldReset])*/
+
+  
 
   return (
     <LayoutContainer scrolls={true}>
@@ -130,9 +148,12 @@ export const AddStudentView = (props: AddStudentViewProps) => {
           title={props.isNew ?"Create Profile" : "Edit Profile"} 
           button={()=>(
             <IconButton
-              style={{position: "absolute", right: 0, }}
+              style={{position: "absolute", right: 0 }}
               name="close"
               onPress={() => {
+                 if (props.isSubmitting) {
+                  return
+                 }
                  props.onClose();
 
                  reset()

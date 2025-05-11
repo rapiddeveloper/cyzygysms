@@ -31,6 +31,20 @@ class SMSAPIServiceMock extends SMSAPIService {
           });
     }
 
+    async deleteProfileData(profileId: string): Promise<Result<boolean, Error>> {
+      return new Promise((resolve) => {
+          setTimeout(() => {
+             
+             
+              const result: Result<boolean, ResultType.Success> = {
+                  value: true,
+                  type: ResultType.Success,
+              };
+              resolve(result);
+          }, 3000); // Simulate a 1-second delay
+      });
+  }
+
     async uploadImage(studentId: string, file: FileObj): Promise<Result<string, Error>> {
         return new Promise((resolve) => {
             setTimeout(() => {

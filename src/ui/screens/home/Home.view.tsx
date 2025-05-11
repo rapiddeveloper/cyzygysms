@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
 import { previewStudentsData } from "../../../data/domain/models/StudentProfile";
 import StudentListItem from "../../components/StudentListItem";
@@ -7,6 +7,8 @@ import { Divider } from "../../components/Divider";
 import { constants } from "../../../data/utilites/constants";
   
 export const HomeView = (props: HomeViewProps) => {
+
+   
 
   if (props.profiles.length === 0) {
     return null
@@ -17,7 +19,7 @@ export const HomeView = (props: HomeViewProps) => {
       contentContainerStyle={styles.container}
       ItemSeparatorComponent={() => <Divider style={styles.divider} />}
       data={props.profiles}
-      keyExtractor={(item) => item.studentId}
+      //keyExtractor={(item) => item.studentId }
       renderItem={({ item }) => (
         <StudentListItem
           student={item}

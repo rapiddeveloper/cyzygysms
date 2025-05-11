@@ -34,6 +34,12 @@ const StudentProfileActionSheet = (
   return (
     <ActionSheet onClose={()=>payload.onClose()}>
       <ActionSheetContentContainer>
+      <Pressable style={{paddingBlock: 8}} onPress={() => payload.onEditProfile()}>
+          <Stack horizontal align={"center"} space={4}>
+            <IconButton name="edit" />
+            <Text style={labelStyle}>Edit Profile</Text>
+          </Stack>
+        </Pressable>
         <Pressable
           onPress={() => {
             payload.onDeleteProfile();
@@ -44,12 +50,7 @@ const StudentProfileActionSheet = (
             <Text style={labelStyle}>Delete Profile</Text>
           </Stack>
         </Pressable>
-        <Pressable onPress={() => payload.onEditProfile()}>
-          <Stack horizontal align={"center"} space={4}>
-            <IconButton name="edit" />
-            <Text style={labelStyle}>Edit Profile</Text>
-          </Stack>
-        </Pressable>
+      
       </ActionSheetContentContainer>
     </ActionSheet>
   );

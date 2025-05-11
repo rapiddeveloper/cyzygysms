@@ -3,7 +3,7 @@ import { EnrollmentStatus, StudentProfileFormData } from "../domain/models/Stude
 export const constants = {
     actionSheetHorizontalPadding: 16,
     actionSheetVerticalPadding: 24,
-    actionSheetVerticalSpacing: 4,
+    actionSheetVerticalSpacing: 8,
 
     containerPaddingBlock: 32,
     containerPaddingInline: 20,
