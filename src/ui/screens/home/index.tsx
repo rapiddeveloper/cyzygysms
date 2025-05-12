@@ -1,3 +1,6 @@
+/**
+ * Abstract: Home screen for displaying, deleting and editing student profiles
+ */
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import React, { useCallback, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";

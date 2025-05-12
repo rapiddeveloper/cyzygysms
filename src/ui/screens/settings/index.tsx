@@ -1,3 +1,6 @@
+/**
+ * Abstract: A component that creates the settings screen
+ */
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import SettingsView from './Settings.view'
@@ -8,11 +11,7 @@ import { useSettingsStore } from '../../hooks/useSettingsStore';
  
 const Settings = () => {
 
-   // const {settings, initialize} = useSettingsStore(useShallow(store =>({
-   //    updateValue: store.updateValue,
-   //    settings: store.settings,
-   //    initialize: store.initalizeSettings
-   //   })))
+  
    const {settings} = useSettingsStore((store)=> store)
      
   const handleSelect = (kind: AppSettingKind) => {
