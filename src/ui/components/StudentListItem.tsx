@@ -6,6 +6,7 @@ import { Box, Stack } from "@grapp/stacks";
  
 import { IconButton } from "./IconButton";
 import { useSettingsStore } from "../hooks/useSettingsStore";
+import { constants } from "../../data/utilites/constants";
 
 /**
  *
@@ -25,28 +26,28 @@ type StudentProps = {
 
 const StudentListItem = (props: StudentProps) => {
   const { student, onPerformAction } = props;
-    const {typography} = useSettingsStore((store) => store).currentTheme();
+    const {typography, colors} = useSettingsStore((store) => store).currentTheme();
   
 
   return (
-    <Stack horizontal space={4} >
+    <Stack horizontal space={4} style={{backgroundColor: colors.surface, paddingVertical: constants.actionSheetHorizontalPadding}}>
       <Box>
         <Image source={{ uri: student.photoURL }} style={styles.avatar} />
       </Box>
       <Stack space={1}>
-        <Text numberOfLines={1} style={[typography.subtitle1]}>
+        <Text numberOfLines={1} style={[typography.subtitle1, {color: colors.onSurface}]}>
           {student.fullname}
         </Text>
-        <Text numberOfLines={1} style={[typography.caption]}>
+        <Text numberOfLines={1} style={[typography.caption, {color: colors.onSurface}]}>
           {student.email}
         </Text>
-        <Text style={[typography.subtitle2, styles.enrollmentStatus]}>
+        <Text style={[typography.subtitle2, styles.enrollmentStatus, {color: colors.onSurface}]}>
           {student.enrollmentStatus}
         </Text>
       </Stack>
       <IconButton
         name="more-vert"
-        color="black"
+        color={colors.onSurface}
         style={[styles.iconButton]}
         onPress={() => onPerformAction?.(student)}
       />

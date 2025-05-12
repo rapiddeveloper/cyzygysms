@@ -10,10 +10,13 @@ import { CYZYGYSMSThemeProvider } from './src/ui/providers/ThemeProvider';
 import {  SheetProvider } from 'react-native-actions-sheet';
 import './src/ui/components/Sheet'
 import { SettingsStoreProvider } from './src/ui/providers/SettingsStoreProvider';
+ 
 
 const RootStack = createNativeStackNavigator();
 
 export default function App() {
+
+ 
 const [fontsLoaded] = useFonts({
     'Raleway-Thin': require('./assets/fonts/Raleway-Thin.ttf'),
     'Raleway-ExtraLight': require('./assets/fonts/Raleway-ExtraLight.ttf'),
@@ -26,13 +29,18 @@ const [fontsLoaded] = useFonts({
     'Raleway-Black': require('./assets/fonts/Raleway-Black.ttf'),
   });
 
+  
+
+
   if (!fontsLoaded) {
     return null;
   }
 
+
+
   return (
 
-    <CYZYGYSMSThemeProvider>
+    // <CYZYGYSMSThemeProvider>
     <SettingsStoreProvider>
     <NavigationContainer>
       <SafeAreaProvider>
@@ -47,7 +55,7 @@ const [fontsLoaded] = useFonts({
       </SafeAreaProvider>
     </NavigationContainer>
     </SettingsStoreProvider>
-     </CYZYGYSMSThemeProvider>
+    //  </CYZYGYSMSThemeProvider>
 
   );
 }

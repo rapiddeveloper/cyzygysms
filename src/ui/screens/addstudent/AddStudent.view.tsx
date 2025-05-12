@@ -148,7 +148,7 @@ export const AddStudentView = (props: AddStudentViewProps) => {
           button={()=>(
             <IconButton
               style={{position: "absolute", right: 0 }}
-              color={props.isSubmitting ? theme.colors.onBackground : theme.colors.outline}
+              color={!props.isSubmitting ? theme.colors.onBackground : theme.colors.outline}
               name="close"
               onPress={() => {
                  if (props.isSubmitting) {
@@ -157,8 +157,7 @@ export const AddStudentView = (props: AddStudentViewProps) => {
                  props.onClose();
 
                  reset()
-                //settingsStore.updateValue("addStudentSheet", false);
-              }}
+               }}
             />
           )}
         />

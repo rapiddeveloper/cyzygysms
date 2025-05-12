@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-simple-toast";
 
 import { HomeView } from "./Home.view";
-import { StudentProfile } from "../../../data/domain/models/StudentProfile";
+import { EnrollmentStatus, StudentProfile } from "../../../data/domain/models/StudentProfile";
 import StudentProfileActionSheet from "../../components/StudentProfileActionSheet";
 import { SheetManager } from "react-native-actions-sheet";
 import { useStudentsProfilesStore } from "../../hooks/useStudentProfilesStore";
@@ -22,22 +22,25 @@ const Home = () => {
   const { profiles, deleteProfile } = useStudentsProfilesStore(
     (store) => store
   );
-  const theme = useSettingsStore((store) => store).currentTheme();
+  const {settings, currentTheme} = useSettingsStore((store) => store)
+  const theme = currentTheme()
+
+  const preferredEnrolment = (()=>{
+    return settings[1].selected
+  })()
 
   const handleProfileSelect = (student: StudentProfile) => {
-    console.log(student.studentId);
-    setSelectedStudent(student);
+     setSelectedStudent(student);
   };
   const handleDeleteProfile = () => {
-    console.log("Delete Profile");
-    if (selectedStudent === null) {
+     if (selectedStudent === null) {
       return;
     }
     try {
       setSelectedStudent(null);
       deleteProfile(selectedStudent.studentId);
       Toast.showWithGravity(
-        `profile deleted successfull`,
+        `profile deleted successfully`,
         Toast.LONG,
         Toast.BOTTOM
       );
@@ -69,8 +72,8 @@ const Home = () => {
   }, [selectedStudent?.studentId]);
 
   return (
-    <View>
-      <HomeView profiles={profiles} onProfileSelect={handleProfileSelect} />
+    <View style={{backgroundColor: theme.colors.background,  flex: 1}}>
+      <HomeView profiles={profiles.filter(profile => preferredEnrolment === EnrollmentStatus.NONE ? true : profile.enrollmentStatus === preferredEnrolment)} onProfileSelect={handleProfileSelect} />
       {profiles.length === 0 && (
         <Stack
           space={1}

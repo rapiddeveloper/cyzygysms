@@ -29,7 +29,7 @@ const defaultSettings = [
     kind: AppSettingKind.APPEARANCE,
     title: AppSettingKind.APPEARANCE,
     description: "Choose your light or dark theme preference",
-    values: ["light", "dark", "system"],
+    values: ["light", "dark"],
     selected: "light",
   },
   {

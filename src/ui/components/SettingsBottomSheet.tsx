@@ -34,10 +34,10 @@ const SettingsBottomSheet = (props: SheetProps<"settings-bottom-sheet">) => {
   }
 
   return (
-    <ActionSheet>
+    <ActionSheet containerStyle={{boxShadow: constants.boxShadow}}>
       <Stack
         space={constants.actionSheetVerticalSpacing}
-        style={[styles.container, { backgroundColor: theme.colors.background }]}
+        style={[styles.container, { backgroundColor: theme.colors.surface }]}
       >
         <Text
           style={[

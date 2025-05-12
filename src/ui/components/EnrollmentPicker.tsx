@@ -47,7 +47,7 @@ export const EnrollmentPicker: React.FC<EnrollmentPickerProps> = ({
             dropdownIconColor={theme.colors.onBackground}
             
           >
-            {enrollmentStatuses.map((status) => (
+            {enrollmentStatuses.filter(status => status != EnrollmentStatus.NONE).map((status) => (
               <Picker.Item
                 style={[styles.pickerItem, {backgroundColor: 'black'}]}
                 key={status}

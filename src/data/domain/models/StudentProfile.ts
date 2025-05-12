@@ -4,6 +4,7 @@ export enum EnrollmentStatus {
   ENROLLED = "enrolled",
   ALUMNI = "alumni",
   GRADUATED = "graduated",
+  NONE = "all"
 }
 
 export interface StudentProfile {

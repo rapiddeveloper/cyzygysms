@@ -8,20 +8,18 @@ import { useSettingsStore } from '../../hooks/useSettingsStore';
  
 const Settings = () => {
 
-   const {settings, initialize} = useSettingsStore(useShallow(store =>({
-      updateValue: store.updateValue,
-      settings: store.settings,
-      initialize: store.initalizeSettings
-     })))
+   // const {settings, initialize} = useSettingsStore(useShallow(store =>({
+   //    updateValue: store.updateValue,
+   //    settings: store.settings,
+   //    initialize: store.initalizeSettings
+   //   })))
+   const {settings} = useSettingsStore((store)=> store)
      
   const handleSelect = (kind: AppSettingKind) => {
      SheetManager.show('settings-bottom-sheet', {payload: {settingKind: kind}})
   };
-  console.log("settings", settings[0].kind);
-  
-  useEffect(()=>{
-       initialize();
-  },[])
+   
+ 
   return (
     <SettingsView onHandleSelect={handleSelect} settings={settings} />
   )

@@ -6,7 +6,7 @@
  * form and the uploading of the student's photo.
  */
 
-import {  Modal, StyleSheet, Text, View } from "react-native";
+import {  Alert, Modal, StyleSheet, Text, View } from "react-native";
 import React, {  useState } from "react";
 import Toast from "react-native-simple-toast";
 import { AddStudentView } from "./AddStudent.view";
@@ -30,6 +30,8 @@ const AddStudent = () => {
     useState<StudentProfileFormData>(emptyFormData);
   const navigation =
     useNavigation<MainTabViewScreenProps<"Home">["navigation"]>();
+    const settingsNavigation =
+    useNavigation<MainTabViewScreenProps<'Settings'>["navigation"]>();
   const createProfileNavigation =
     useNavigation<MainTabViewScreenProps<"AddStudent">["navigation"]>();
   const route = useRoute<MainTabViewScreenProps<"AddStudent">["route"]>();
@@ -44,6 +46,7 @@ const AddStudent = () => {
   } = useStudentProfileFormStore((store) => store);
   const [studentId, setStudentId] = useState<string>("");
   const [resetFormTaskId, setResetFormTaskId] = useState<string>("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   const isNew = (() => studentId === "")();
 
@@ -52,12 +55,12 @@ const AddStudent = () => {
   };
 
   const handleClose = () => {
-     
-   // setResetFormTaskId(uuid.v4());
-    setStudentId("")
+     setModalVisible(false)
+     setStudentId("")
     setProfileToEdit(emptyFormData)
-     createProfileNavigation.navigate('AddStudent', {studentId: undefined}, {pop: true})
-     navigation.navigate("Home");
+    createProfileNavigation.navigate('AddStudent', {studentId: undefined})
+    settingsNavigation.navigate('Settings')
+    navigation.navigate("Home");
   };
 
   const handleSubmit = async (submittedData: StudentProfileFormData) => {
@@ -67,7 +70,7 @@ const AddStudent = () => {
         if (createdProfile !== null) {
           addProfile(createdProfile);
           Toast.showWithGravity(
-            `Profile created successfull`,
+            `Profile created successfully`,
             Toast.LONG,
             Toast.BOTTOM
           );
@@ -77,7 +80,7 @@ const AddStudent = () => {
         if (updatedProfile !== null) {
           replaceProfile(updatedProfile);
           Toast.showWithGravity(
-            `Profile updated successfull`,
+            `Profile updated successfully`,
             Toast.LONG,
             Toast.BOTTOM
           );
@@ -120,12 +123,29 @@ const AddStudent = () => {
         enrollmentStatus: profile.enrollmentStatus,
       };
       setProfileToEdit(formData);
-      return () => {};
+     
     }, [studentId])
+
+   
   );
 
+  useFocusEffect(
+    React.useCallback(()=>{
+      setModalVisible(true)
+      
+    }, [])
+  )
+
+  
+
   return (
-    <Modal >
+     <Modal   animationType="slide"
+     transparent={true}
+     visible={modalVisible}
+     onRequestClose={() => {
+       
+       setModalVisible(!modalVisible);
+     }}>
       <AddStudentView
          isNew={isNew}
         draft={profileToEdit}
@@ -136,7 +156,7 @@ const AddStudent = () => {
           handlePhotoUpload(selectedPhotoFileURL)
         }
       />
-    </Modal>
+      </Modal>
   );
 };
 

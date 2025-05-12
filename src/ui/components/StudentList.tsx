@@ -4,6 +4,7 @@ import { StudentProfile } from "../../data/domain/models/StudentProfile";
 import { Divider } from "./Divider";
 import StudentListItem from "./StudentListItem";
 import { constants } from "../../data/utilites/constants";
+import { useSettingsStore } from "../hooks/useSettingsStore";
 
 type StudentListProps = {
   profiles: StudentProfile[];
@@ -12,9 +13,11 @@ type StudentListProps = {
 
 export const StudentList = ({ profiles, onProfileSelect }: StudentListProps) => {
 
+      const {colors} = useSettingsStore((store) => store).currentTheme();
+  
   return (
     <FlatList
-      contentContainerStyle={styles.container}
+      contentContainerStyle={[styles.container, {backgroundColor: colors.background}]}
       ItemSeparatorComponent={() => <Divider style={styles.divider} />}
       data={profiles}
       renderItem={({ item }) => (
@@ -33,6 +36,6 @@ const styles = StyleSheet.create({
     paddingBlock: constants.containerPaddingBlock
   },
   divider: {
-    marginBlock: 16,
+    marginBlock: 0,
   },
 });

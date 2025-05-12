@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {  StoreApi } from "zustand";
 import SettingRepositoryRemote from "../../data/repositories/setting/SettingRepositoryRemote";
 import {
@@ -20,6 +20,12 @@ export const SettingsStoreProvider = ({ children }: BearStoreProviderProps) => {
   const [store] = React.useState(
     createSettingsStore(new SettingRepositoryRemote(userPreferencesService))
   );
+   
+  useEffect(()=>{
+     (async ()=>{
+        store.getState().initalizeSettings()
+     })()
+  }, [])
 
   return (
     <SettingsStoreContext.Provider value={store}>

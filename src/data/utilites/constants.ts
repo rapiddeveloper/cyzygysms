@@ -33,7 +33,8 @@ export const constants = {
         height: 40,
         padding: 10,
         borderRadius: 4,
-      }
+      },
+    boxShadow: [{offsetX: 0, offsetY: 4, blurRadius: 4, spreadDistance: 0, color: 'rgba(0, 0, 0, 0.08)'}]
 }
 
 export const emptyFormData: StudentProfileFormData = {file: {uri: '', name: '-1', type: '-1'}, name: '', enrollmentStatus: EnrollmentStatus.ENROLLED, email: ''}
